@@ -43,14 +43,28 @@ public class TaskService
     }
     
     @Transactional
-    public Task getTask(int id) {
-     return taskRepository.findOne(id);
+    public List getActiveTasks() {
+     List<Task> tasks=new ArrayList();
+     Iterable taskIterable=taskRepository.getActiveTasks();
+     Iterator taskIterator=taskIterable.iterator();
+     while(taskIterator.hasNext())
+     {
+    	 tasks.add((Task) taskIterator.next());
+     }
+     return tasks;
     }
     
     @Transactional
-    public void addTask(Task task) {
-    	taskRepository.save(task);
+    public Task getTask(int id) {
+     return taskRepository.fetchTaskByID(id);
     }
+    
+    @Transactional
+    public Task addTask(Task task) {
+    	 return taskRepository.save(task);
+    	
+    }
+  
     
     @Transactional
     public void updateTask(Task task) {
@@ -60,6 +74,6 @@ public class TaskService
     
     @Transactional
     public void deleteTask(int id) {
-    	taskRepository.delete(id);
+    	taskRepository.deleteTaskByID(id);
     }
 }

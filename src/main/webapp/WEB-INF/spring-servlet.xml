@@ -42,4 +42,7 @@
   <beans:property name="password" value="pass@word2" />
  </beans:bean >
  
+ <beans:bean id="persistenceExceptionTranslationPostProcessor" class=
+  "org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+ 
 </beans:beans>

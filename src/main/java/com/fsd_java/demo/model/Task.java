@@ -37,8 +37,12 @@ public class Task implements Serializable
     
     @Column(name="endDate")
     private Date endDate;
+    
+    @Column(name="status")
+    private String status;
+    
      
-    public Task(Integer id, String taskName, Integer priority, String parentTask, Date startDate, Date endDate) {
+    public Task(Integer id, String taskName, Integer priority, String parentTask, Date startDate, Date endDate, String status) {
         super();
         this.id = id;
         this.taskName = taskName;
@@ -46,6 +50,7 @@ public class Task implements Serializable
         this.parentTask = parentTask;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.status = status;
     }
      
     public Task(){
@@ -100,10 +105,18 @@ public class Task implements Serializable
 		this.endDate = endDate;
 	}
  
-    @Override
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	@Override
     public String toString() {
         return "TaskVO [id=" + id + ", taskName=" + taskName
                 + ", priorty=" + priority + ", parentTask=" + parentTask 
-                + ", startDate=" + startDate +", endDate=" + endDate+"]";
+                + ", startDate=" + startDate +", endDate=" + endDate+", status=" + status+"]";
     }
 }
