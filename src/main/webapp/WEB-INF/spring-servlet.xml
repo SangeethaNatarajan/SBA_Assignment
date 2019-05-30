@@ -30,6 +30,9 @@
   <beans:property name="jpaVendorAdapter">
    <beans:bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
     <beans:property name="generateDdl" value="true" />
+     <beans:property name="hibernate.show_sql" value="true" />
+     <beans:property name="hibernate.format_sql" value="true" />
+     <beans:property name="hibernate.hbm2ddl.auto" value="true" />
    </beans:bean>
   </beans:property>
  </beans:bean> 
