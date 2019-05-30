@@ -1,5 +1,12 @@
 com\fsd_java\demo\controller\TaskRESTController.class
-com\fsd_java\demo\repository\TaskRepository.class
 com\fsd_java\demo\service\TaskService.class
 com\fsd_java\demo\model\Task.class
+com\fsd_java\demo\repository\ProjectRepository.class
+com\fsd_java\demo\repository\UserRepository.class
+com\fsd_java\demo\repository\TaskRepository.class
+com\fsd_java\demo\model\Project.class
 com\fsd_java\demo\model\TaskListVO.class
+com\fsd_java\demo\DemoApplication.class
+com\fsd_java\demo\service\ProjectService.class
+com\fsd_java\demo\service\UserService.class
+com\fsd_java\demo\model\User.class
