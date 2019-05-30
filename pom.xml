@@ -7,14 +7,17 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>springrestexample Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  
+  <parent>
+  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.4.RELEASE</version>  
+  </parent>
+  
   <dependencies>
-  <dependency>
-   <groupId>junit</groupId>
-   <artifactId>junit</artifactId>
-   <version>3.8.1</version>
-   <scope>test</scope>
-  </dependency>
-  <dependency>
+   <dependency>
    <groupId>javax.servlet</groupId>
    <artifactId>javax.servlet-api</artifactId>
    <version>3.1.0</version>
@@ -39,8 +42,64 @@
    <artifactId>jackson-databind</artifactId>
    <version>2.4.1</version>
   </dependency>
-  <!-- Hibernate -->
+  
+    <!-- https://mvnrepository.com/artifact/junit/junit -->
+<!-- <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <version>4.8.2</version>
+    <scope>test</scope>
+</dependency> -->
+  
+  <!-- Junit -->
+  
+   <!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>1.9.5</version>
+   <!--  <scope>test</scope> -->
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-test</artifactId>
+    <!-- <version>2.1.4.RELEASE</version> -->
+     <scope>test</scope>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+    <!-- <version>2.1.4.RELEASE</version> -->
+   <!--  <scope>test</scope> -->
+</dependency>
+ <dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-data-jpa</artifactId>
+  <version>1.2.5.RELEASE</version>
+  </dependency>
   <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+   </dependency>
+ 
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-test</artifactId>
+    <version>3.2.3.RELEASE</version>    
+</dependency> 
+
+<!-- https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all -->
+<dependency>
+    <groupId>org.hamcrest</groupId>
+    <artifactId>hamcrest-all</artifactId>
+    <version>1.3</version>
+</dependency>
+
+
+  
+  <!-- Hibernate -->
+   <dependency>
    <groupId>org.hibernate</groupId>
    <artifactId>hibernate-core</artifactId>
    <version>${hibernate.version}</version>
@@ -50,7 +109,7 @@
    <artifactId>hibernate-entitymanager</artifactId>
    <version>${hibernate.version}</version>
   </dependency>
- 
+  
   <!-- Apache Commons DBCP -->
   <!-- <dependency>
     <groupId>commons-collections</groupId>
@@ -64,13 +123,15 @@
   </dependency> 
   <!-- Spring ORM -->
   
-  <dependency>
-  <groupId>org.springframework.boot</groupId>
-  <artifactId>spring-boot-starter-data-jpa</artifactId>
-  <version>1.2.5.RELEASE</version>
-  </dependency>
+ 
 
-
+ <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
+<!-- <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.0.RELEASE</version>
+</dependency> -->
+ 
       
   
   <dependency>
@@ -78,11 +139,11 @@
    <artifactId>spring-orm</artifactId>
    <version>${spring.version}</version>
   </dependency>
-  <dependency>
+ <!--  <dependency>
    <groupId>org.springframework.data</groupId>
    <artifactId>spring-data-jpa</artifactId>
    <version>1.8.0.RELEASE</version>
-  </dependency>
+  </dependency> -->
   <dependency>
     <groupId>org.springframework</groupId>
     <artifactId>spring-jdbc</artifactId>
@@ -129,6 +190,12 @@
    <version>2.0</version>
    <scope>provided</scope>
   </dependency>
+  
+<!--  <dependency>
+    <groupId>org.slf4j</groupId>
+    <artifactId>jcl-over-slf4j</artifactId>
+    <version>1.7.12</version>
+</dependency> -->
 </dependencies>
  
   <build>
@@ -146,7 +213,8 @@
    <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-war-plugin</artifactId>
-    <configuration>
+     <version>3.1.0</version>
+        <configuration>
      <failOnMissingWebXml>false</failOnMissingWebXml>
     </configuration>
    </plugin>
