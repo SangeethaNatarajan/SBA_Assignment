@@ -21,13 +21,13 @@ public class ProjectService
 {
     private List<Project> Projects = new ArrayList<Project>();
  
-    public List<Project> getProjects() {
+    /*public List<Project> getProjects() {
         return Projects;
     }
  
     public void setProjects(List<Project> Projects) {
         this.Projects = Projects;
-    }
+    }*/
     
     @Autowired
     ProjectRepository ProjectRepository;
@@ -65,7 +65,7 @@ public class ProjectService
     }
     
     @Query
-    public Project fetchProjectByEmpID(int EmpID){
+    public Project fetchProjectByEmpID(String EmpID){
     	return ProjectRepository.fetchProjectByEmpID(EmpID);
     }
     

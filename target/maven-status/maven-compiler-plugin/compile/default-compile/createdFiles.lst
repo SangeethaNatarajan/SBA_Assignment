@@ -1,7 +1,6 @@
 com\fsd\demo\model\Task.class
 com\fsd\demo\DemoApplication.class
 com\fsd\demo\service\TaskService.class
-com\fsd\demo\model\TaskListVO.class
 com\fsd\demo\service\ProjectService.class
 com\fsd\demo\service\UserService.class
 com\fsd\demo\model\User.class

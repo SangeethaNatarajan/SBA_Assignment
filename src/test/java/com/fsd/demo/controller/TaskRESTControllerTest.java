@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import com.fsd.demo.model.Project;
 import com.fsd.demo.model.Task;
@@ -89,6 +90,8 @@ public class TaskRESTControllerTest {
         ResponseEntity<String> response = restTemplate.exchange(getRootUrl() + "/getUsers",
         HttpMethod.GET, entity, String.class);  
         assertNotNull(response.getBody());
+        
+        
     }
      
      @Test
@@ -119,9 +122,24 @@ public class TaskRESTControllerTest {
        Task savedTask = taskService.addTask(task);
        assertThat(taskService.getTask(savedTask.getId())).isNotNull();
        savedTask.setStatus("DeActive");
+       savedTask.setEndDate(date2);
+       savedTask.setStartDate(date1);
+       savedTask.setPriority(100);
+       savedTask.setTaskName("sampleTaskTest");
+       savedTask.setParentTask("SampleParentTest");
+       savedTask.setId(savedTask.getId());
        taskService.updateTask(savedTask);
        assertEquals(savedTask.getStatus(),"DeActive");
-       int taskId = savedTask.getId();
+       assertNotNull(savedTask.toString());
+       
+      
+       
+       Task task1 = new Task(-1, "sampleTaskTest1", 101, "SampleParentTest1", date1, date2, "Active");
+    
+       RestTemplate restTemplate = new RestTemplate();
+       Task result = restTemplate.postForObject( getRootUrl() +"/addTask", task1, Task.class);
+       assertNotNull(result);
+     
        taskService.deleteTask(savedTask.getId());
       
      }
@@ -143,9 +161,29 @@ public class TaskRESTControllerTest {
    		    "SampleManager", 100000);
        Project savedProject = projectService.addProject(project);
        savedProject.setProjectName("SampleProjectUpdate");
+       savedProject.setManager("SampleManagerTest");
+       savedProject.setPriority(22222);
+       savedProject.setTaskId(12331);
+       savedProject.setProjectId(savedProject.getProjectId());
+       savedProject.setStartDate(date1);
+       savedProject.setEndDate(date2);
        projectService.updateProject(savedProject);
-       assertEquals(savedProject.getProjectName(),"SampleProjectUpdate");      
+       assertEquals(savedProject.getProjectName(),"SampleProjectUpdate");   
+       assertEquals(projectService.fetchProjctByTaskId(12331).getManager(),"SampleManagerTest");
+       assertEquals(projectService.fetchProjectByEmpID("SampleManagerTest").getManager(),"SampleManagerTest");
+       assertEquals(projectService.fetchProjectByProjectId(savedProject.getProjectId()).getManager(),"SampleManagerTest");
+       assertEquals(projectService.fetchProjectByProjectName("SampleProjectUpdate").getManager(),"SampleManagerTest");
+       assertNotNull(savedProject.toString());
        projectService.deleteProject(savedProject.getProjectId());
+       
+       
+       Project project1 = new Project(-1, "SampleProject", date1, date2, 123, 
+      		    "SampleManager", 100000);
+       
+       RestTemplate restTemplate = new RestTemplate();
+       Project result1 = restTemplate.postForObject( getRootUrl() +"/addProject", project1, Project.class);
+       assertNotNull(result1);
+       
       // assertThat(taskService.getTask(taskId)).isNull();
      }
      
@@ -156,10 +194,26 @@ public class TaskRESTControllerTest {
        User user = new User(-1, "TestFirstName", "TestLastName", 777777);
        User savedUser = userService.addUser(user);
        savedUser.setFirstname("TestFirstNameUpdate");
+       savedUser.setLastname("TestLastName");
+       savedUser.setUserId(savedUser.getUserId());
+       savedUser.setEmpId(777777);
        userService.updateUser(savedUser);
-       assertEquals(savedUser.getFirstname(),"TestFirstNameUpdate");    
+       assertEquals(savedUser.getFirstname(),"TestFirstNameUpdate");      
+       User getUser = userService.findByEmpID(777777);
+       assertEquals(getUser.getEmpId(),savedUser.getEmpId());
+       assertEquals(userService.findByFirstName("TestFirstNameUpdate").getFirstname(),"TestFirstNameUpdate");
+       assertEquals(userService.findByLastName("TestLastName").getLastname(),"TestLastName");
+       assertNotNull(savedUser.toString());
+       userService.deleteUser(savedUser.getUserId());
+       
+       User user1 = new User(-1, "TestFirstName", "TestLastName", 777777);
+      
+      RestTemplate restTemplate = new RestTemplate();
      
-       taskService.deleteTask(savedUser.getUserId());
+      User result2 = restTemplate.postForObject( getRootUrl() +"/addUser", user1, User.class);
+      assertNotNull(result2);
+     // userService.deleteUser(result2.getUserId());
+     
        
      }
      

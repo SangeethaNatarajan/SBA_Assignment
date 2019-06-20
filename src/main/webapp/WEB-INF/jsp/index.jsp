@@ -113,7 +113,7 @@ body {font-family: Arial;}
 .ebtn[disabled] {
     cursor: not-allowed;
     background-color: rgba(255,255,255,.15);
-}
+} 
 
 
 
@@ -364,11 +364,11 @@ app.controller("TaskController", function($scope, $http) {
        }
        
        $scope.updateUserData = function (evt, user) {
-            alert($scope.userForm.userId);
+           // alert($scope.userForm.userId);
 	        $scope.userForm.firstname = $('#firstname').val();
 	        $scope.userForm.lastname = $('#lastname').val();
 	        $scope.userForm.empId = $('#employeeId').val();	
-	        alert($scope.userForm);
+	       // alert($scope.userForm);
 	        
 	        if($('#firstname').val().trim() == "") {
 	        alert("Enter First Name of the User");
@@ -446,7 +446,8 @@ app.controller("TaskController", function($scope, $http) {
                    'Content-Type': 'application/json'
                } 
            }).then(function successCallback(data) {
-             console.log(data);
+             console.log("data ---"+data);
+             if(data.length > 0 ){
            	 alert("User Found Successfully!");
            	 var tasksObj = data;
            	console.log(tasksObj["data"]);
@@ -456,9 +457,13 @@ app.controller("TaskController", function($scope, $http) {
    			 $('#employeeId').val($scope.userForm.empId);
    			 // $scope.userForm.userId = data.userId;
    			 getUsers();
+   			 } else {
+   			 	alert("User Not Found, Enter valid First Name!");
+               	console.log(response.statusText);
+   			 }
            }, function errorCallback(response) {
                alert("User Not Found, Enter valid First Name!");
-               console.log(response.statusText);
+               
            });
            } else if($scope.searchlname.trim() != ""){
             	$http({
@@ -474,11 +479,15 @@ app.controller("TaskController", function($scope, $http) {
              
             var tasksObj = data;
            	console.log(tasksObj["data"]);
+           	if(data.length > 0 ){
            	$scope.userForm = tasksObj["data"];
              $('#firstname').val($scope.userForm.firstname);
    			 $('#lastname').val($scope.userForm.lastname);
    			 $('#employeeId').val($scope.userForm.empId);  			
    			 getUsers(); 
+          	 } else {
+          	 	alert("User Not Found, Enter valid Last Name!");
+          	 }
           	 }, function errorCallback(response) {
           	 	alert("User Not Found, Enter valid Last Name!");
                console.log(response.statusText);
@@ -494,6 +503,7 @@ app.controller("TaskController", function($scope, $http) {
                } 
            	}).then(function successCallback(data) {
              console.log(data);
+             if(data.length > 0 ){
            	 alert("User Found Successfully!");
             var tasksObj = data;
            	console.log(tasksObj["data"]);
@@ -502,6 +512,9 @@ app.controller("TaskController", function($scope, $http) {
    			 $('#lastname').val($scope.userForm.lastname);
    			 $('#employeeId').val($scope.userForm.empId);  			
    			 getUsers(); 
+   			 } else {
+   			 	alert("User Not Found, Enter valid Employee ID!");
+   			 }
           	 }, function errorCallback(response) {
           	   alert("User Not Found, Enter valid Employee ID!");
                console.log(response.statusText);
@@ -514,6 +527,8 @@ app.controller("TaskController", function($scope, $http) {
        
 	 
     $scope.addProjectBtn = function (){
+    
+    
     		var method = "";
 	        var url = "";
 	        
@@ -572,6 +587,8 @@ app.controller("TaskController", function($scope, $http) {
     
     // AddProject
     $scope.addProject = function (event, taskName) {
+    
+    	getActiveTask();
    		var i, tabcontent, tablinks;
    		tabcontent = document.getElementsByClassName("tabcontent");
     		for (i = 0; i < tabcontent.length; i++) {
@@ -598,7 +615,7 @@ app.controller("TaskController", function($scope, $http) {
     }
     
     $scope.selectTask = function(taskNo) {  
-    	alert("taskNo"+taskNo);  
+    	//alert("taskNo"+taskNo);  
    		// var i,mapTasks;
    		$scope.projectTasks = taskNo;
     	// mapTasks = document.getElementsByName("mapTask");
@@ -617,11 +634,11 @@ app.controller("TaskController", function($scope, $http) {
     
     function createProjectTask(projectName,task){
     	
-    	alert("projectName "+projectName);
-    	alert("taskId "+task.id);
+    	//alert("projectName "+projectName);
+    	//alert("taskId "+task.id);
     	
     	var pro =  $('#proName').val();
-    	alert(pro)
+    	//alert(pro)
     	 
     	$http({
             method : 'GET',
@@ -638,12 +655,12 @@ app.controller("TaskController", function($scope, $http) {
         	$scope.projectForm = proObj["data"];
         	$scope.projectForm.projectId = pro;
         	$scope.projectForm.taskId = task.id;
-        	alert($scope.projectForm.projectName);
-        	alert($scope.projectForm.startDate);
-        	alert($scope.projectForm.endDate);
-        	alert($scope.projectForm.priority);
-        	alert($scope.projectForm.manager);
-        	alert($scope.projectForm.taskId);
+        	//alert($scope.projectForm.projectName);
+        	//alert($scope.projectForm.startDate);
+        	//alert($scope.projectForm.endDate);
+        	//alert($scope.projectForm.priority);
+        	//alert($scope.projectForm.manager);
+        	//alert($scope.projectForm.taskId);
         	$http({
 	            method: "POST",
 	            url: 'http://localhost:8060/addProject',
@@ -764,7 +781,7 @@ app.controller("TaskController", function($scope, $http) {
            	var tasksObj = data;
            	console.log(tasksObj["data"]);
            	$scope.task = tasksObj["data"];
-            alert($scope.task.id);
+            //alert($scope.task.id);
         	createProjectTask($('#proName').val(),$scope.task);
            	
             var i, tabcontent, tablinks;
@@ -1024,10 +1041,12 @@ app.controller("TaskController", function($scope, $http) {
                console.log(response.statusText);
            });
     }
-  
-});
-   
-function openTask(evt, taskName) {
+    
+    
+    $scope.openTask = function(evt, taskName) {
+
+     getProjects();
+
      $('#ntask').val("");
    	 $('#ptask').val("");
    	 $('#prRange').val("");
@@ -1045,7 +1064,7 @@ function openTask(evt, taskName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(taskName).style.display = "block";
-    evt.currentTarget.className += "active";
+    //evt.currentTarget.className += "active";
     
   
 
@@ -1060,6 +1079,18 @@ function openTask(evt, taskName) {
 
 }
 
+$scope.isDisabled = function(stateName){
+ // alert(stateName);
+  if (stateName=="DeActive") {
+   // alert("true");
+   return true;
+  }
+}
+  
+});
+   
+ 
+
 
 </script>
 <body ng-app="ViewApp" ng-controller="TaskController" ng-init="init()" style="height:4000px;">
@@ -1069,7 +1100,7 @@ function openTask(evt, taskName) {
 <form ng-submit="submitTask()">
 <div class="tab">
   <button class="tablinks" ng-click="addProject(event, 'addProject')">Add Project</button>
-  <button class="tablinks" onclick="openTask(event, 'add')">Add Task</button>
+  <button class="tablinks" ng-click="openTask(event, 'add')">Add Task</button>
   <button class="tablinks" ng-click="addUser(event, 'addUser')">Add User</button>
   <button class="tablinks" ng-click="viewTask(event, 'view')">View Task</button>
  
@@ -1295,9 +1326,9 @@ function openTask(evt, taskName) {
 					<td>{{task.parentTask}}</td>
 					<td>{{task.startDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
 					<td>{{task.endDate | date:'dd-MM-yyyy HH:mm:ss'}}</td>
-				    <td><button type="button" class="ebtn" ng-disabled=({{task.status}}===DeActive) id="editbtn" name="editbtn" ng-click="editTask(event,task)">Edit Task</button></td>
-				    <td> <button type="button" class="ebtn" ng-disabled=({{task.status}}===DeActive) id="endbtn" name="endbtn" ng-click="endTask(event,task)">End</button></td>
-				    <td> <button type="button" class="ebtn" ng-disabled=({{task.status}}===DeActive) id="deletebtn" name="deletebtn" ng-click="deleteTask(event,task.id)">Delete</button></td>
+				    <td><button type="button" class="ebtn"  ng-disabled="isDisabled(task.status)" id="editbtn" name="editbtn" ng-click="editTask(event,task)">Edit Task</button></td>
+				    <td> <button type="button" class="ebtn" ng-disabled="isDisabled(task.status)" id="endbtn" name="endbtn" ng-click="endTask(event,task)">End</button></td>
+				    <td> <button type="button" class="ebtn" ng-disabled="isDisabled(task.status)" id="deletebtn" name="deletebtn" ng-click="deleteTask(event,task.id)">Delete</button></td>
 					
 					<!--->
                 	<!--<td><a href="http://localhost:8060/editTask/{{task.id}}" ng-click="editTask(event, {{task}})"/>Edit</a></td>-->

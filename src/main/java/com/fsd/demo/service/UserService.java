@@ -21,14 +21,14 @@ public class UserService
 {
     private List<User> Users = new ArrayList<User>();
    
-    //method to return all User as List
+    /*//method to return all User as List
     public List<User> getUsers() {
         return Users;
     }
  
     public void setUsers(List<User> Users) {
         this.Users = Users;
-    }
+    }*/
     
     @Autowired
     UserRepository UserRepository;

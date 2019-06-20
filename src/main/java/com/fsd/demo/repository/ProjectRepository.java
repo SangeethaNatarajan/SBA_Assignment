@@ -19,7 +19,7 @@ public interface ProjectRepository extends JpaRepository <Project, Integer> {
 	 public Project fetchProjctByTaskId(@Param("taskId") int taskId); 
 	 
 	 @Query("SELECT a FROM Project a WHERE a.manager=:manager")    
-	 public Project fetchProjectByEmpID(@Param("manager") int manager);
+	 public Project fetchProjectByEmpID(@Param("manager") String manager);
 	 
 	 @Query("SELECT a FROM Project a WHERE a.projectId=:projectId")    
 	 public Project fetchProjectByProjectId(@Param("projectId") int projectId);

@@ -39,7 +39,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fsd.demo.model.TaskListVO;
 import com.fsd.demo.model.User;
 import com.fsd.demo.model.Project;
 import com.fsd.demo.model.Task;
